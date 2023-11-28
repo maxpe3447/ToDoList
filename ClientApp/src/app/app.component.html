@@ -1,5 +1,13 @@
 <app-nav></app-nav>
+
 <div class="separator"></div>
 <app-home *ngIf="!(accountService.currentUser$ | async)"></app-home>
 
 <app-list *ngIf="accountService.currentUser$ | async"></app-list>
+<ng-particles
+class="hei"
+    [id]="id"
+    [options]="particlesOptions"
+    [particlesInit]="particlesInit"
+    (particlesLoaded)="particlesLoaded($event)"
+></ng-particles>
