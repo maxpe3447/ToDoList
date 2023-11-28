@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 using ToDoListApi.Models;
 using ToDoListApi.Services.TaskService;
 
@@ -10,9 +11,9 @@ namespace ToDoListApi.Controllers;
 [Authorize]
 public class TaskController:ControllerBase
 {
-    private readonly TaskService _taskService;
+    private readonly ITaskService _taskService;
 
-    public TaskController(TaskService taskService)
+    public TaskController(ITaskService taskService)
     {
         _taskService = taskService;
     }
@@ -48,14 +49,16 @@ public class TaskController:ControllerBase
     {
         return await _taskService.GetById(id);
     }
-    [HttpPost("get_all")]
-    public ActionResult<IQueryable<Data.Entities.Task>> GetAllTasks()
+    
+    [HttpGet("get_all")]
+    public IQueryable<Data.Entities.Task> GetAllTasks()
     {
         int userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "0");
         if (userId == 0)
         {
-            return BadRequest("Invalid Token");
+            return Enumerable.Empty<Data.Entities.Task>().AsQueryable();
         }
-        return new JsonResult(_taskService.GetAllByUserId(userId));
+        
+        return _taskService.GetAllByUserId(userId);
     }
 }
