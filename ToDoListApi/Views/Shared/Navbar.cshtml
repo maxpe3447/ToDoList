@@ -1,0 +1,37 @@
+﻿@using ToDoListApi.Models
+@model LoginModel
+
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Todo List</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+            </ul>
+            @if (User.Claims.Count() == 0)
+            {
+                <form asp-action="Login" asp-controller="Account" class="d-flex" autocomplete="off" method="post" >
+                    <input asp-for="Username" name="username" class="form-control me-2" type="text"
+                           placeholder="Username">
+                    <input asp-for="Password" name="password" class="form-control me-2" type="password"
+                           placeholder="Password">
+                    <button class="btn btn-outline-success" type="submit">Login</button>
+                </form>
+            }
+            else
+            {
+                <div class="dropdown" >
+                    <a class="dropdown-toggle text-light text-decoration-none" data-bs-toggle="dropdown">Welcome user</a>
+                    <div class="dropdown-menu">
+                        <a class="drowndown-item">Logout</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</nav>
