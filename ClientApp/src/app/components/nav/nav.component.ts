@@ -2,22 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AccountService } from '../../services/accountService';
-
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, NgbDropdownModule],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
 })
-export class NavComponent implements OnInit{
-  model: any={}
-  
-  ngOnInit(): void {}
+export class NavComponent implements OnInit {
+  model: any = {}
 
-  constructor(public accoutnService:AccountService){ }
+  ngOnInit(): void { }
 
-  login(){
+  constructor(public accoutnService: AccountService) { }
+
+  login() {
     this.accoutnService.login(this.model).subscribe({
       next: response => {
         console.log(response);
@@ -25,7 +25,7 @@ export class NavComponent implements OnInit{
       error: error => console.log(error)
     });
   }
-  logout(){
+  logout() {
     this.accoutnService.logout();
   }
 

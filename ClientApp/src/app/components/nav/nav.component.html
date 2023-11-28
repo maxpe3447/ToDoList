@@ -2,22 +2,11 @@
     <div class="container">
         <a class="navbar-brand" href="#">Todo list</a>
 
-        <ul class="navbar-nav me-auto mb-2 mb-md-0" *ngIf="accoutnService.currentUser$ | async">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Matches</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Lists</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Messages</a>
-            </li>
-        </ul>
 
         <div ngbDropdown class="dropdown" *ngIf="accoutnService.currentUser$ | async">
             <a ngbDropdownToggle class="dropdown-toggle text-light text-decoration-none">Welcome user</a>
             <div ngbDropdownMenu class="dropdown-menu">
-                <a ngbDropdownItem class="drowndown-item">Edit Profile</a>
+                <!-- <a ngbDropdownItem class="drowndown-item">Edit Profile</a> -->
                 <a ngbDropdownItem class="drowndown-item" (click)="logout()">Logout</a>
             </div>
         </div>

@@ -2,3 +2,11 @@
     display: inline-block;
     width: 10px;
 }
+
+.descriptionField{
+    margin-top: 10px;
+}
+.descriptionField textarea{
+    border-radius: 20px;
+    
+}

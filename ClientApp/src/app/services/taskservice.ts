@@ -42,14 +42,14 @@ export class TaskService {
       map( (t:any) => new Task(t.id, t.title, t.description, t.isDone )
     ));    
   }
-  Edit(task:Task){
-     this.http.post('https://localhost:7125/api/'+'task/edit',task,{
+  Edit(task:Task):Observable<any>{
+     return this.http.post('https://localhost:7125/api/'+'task/edit',task,{
         headers: this.GetHeaders()
-    }).subscribe();
+    });
   }
-  Remove(task: Task){
-     this.http.post('https://localhost:7125/api/'+'task/delete',task,{
+  Remove(task: Task):Observable<any>{
+     return this.http.post('https://localhost:7125/api/'+'task/delete',task,{
         headers: this.GetHeaders()
-    }).subscribe();
+    });
   }
 }

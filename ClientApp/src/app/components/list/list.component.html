@@ -1,76 +1,12 @@
-<!-- List -->
-<!-- <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-4">
-            <div *ngFor="let t of tasks">{{t.id}} {{t.title}}</div>
-        </div>
-    </div>
-</div> -->
-<!-- <div class="page-content page-container" id="page-content">
-    <div class="padding">
-        <div class="row container d-flex justify-content-center">
-            <div class="col-md-12">
-                <div class="card px-3">
-                    <div class="card-body">
-                        <h4 class="card-title">Awesome Todo list</h4>
-                        <div class="add-items d-flex">
-                            <input type="text" class="form-control todo-list-input"
-                                placeholder="What do you need to do today?" [(ngModel)]="title"
-                                (keyup.enter)="addTask()">
-                            <button class="add btn btn-primary font-weight-bold todo-list-add-btn"
-                                (click)="addTask()">Add</button>
-                        </div>
-                        <div class="list-wrapper">
-                            <ul class="d-flex flex-column-reverse todo-list">
-                                <! -- <li>
-                                    <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> For what reason would it be advisable. <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
-                                </li> - ->
-
-                                <li *ngFor="let task of tasks" [class.completed]="task.IsDone" class="editor"
-                                    (dblclick)="dblClickForEdit(task)">
-                                    <div class="form-check">
-                                        <label>
-                                            <label class="inline">
-                                                <input class="checkbox" type="checkbox" [checked]="task.IsDone"
-                                                    (change)="togglecheck(task)">
-                                                <i class="input-helper"></i>
-                                            </label>
-                                            <div class="inline-block">
-                                                <label *ngIf="!task.helpField">
-                                                    {{task.Title}}
-                                                </label>
-                                                <input *ngIf="task.helpField" type="text" [(ngModel)]="task.Title"
-                                                    (keyup.enter)="editTask(task)">
-
-                                            </div>
-
-                                        </label>
-                                    </div>
-                                    <img class="remove mdi"
-                                        src="https://cdn3.iconfinder.com/data/icons/linecons-free-vector-icons-pack/32/trash-512.png"
-                                        (click)="remove(task)">
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
 <div class=" container rounded-3 border border-2 border-dark my-5 bg-white" style="height:auto;">
     <div>
-        <h1 class=" h1">To Do List</h1>
+        <h1 class=" h1">Hi👋🏻, {{username}}! This is yout list!</h1>
         <div class="row">
             <div class=" col-8">
-                <input class=" py-3 form-control shadow" placeholder="input your task" type="text" [(ngModel)]="title"
+                <input class=" py-3 form-control shadow" placeholder="Enter your task" type="text" [(ngModel)]="title"
                     (keyup.enter)="addTask()">
             </div>
             <div class="col-2">
-                <!-- <i onclick="addList()" class=" btn btn-dark rounded-pill fas fa-4x fa-plus-circle "></i> -->
                 <button class=" mt-2 btn btn-dark" (click)="addTask()"> Add </button>
             </div>
         </div>
@@ -79,7 +15,6 @@
     <div class="row rounded bg-white">
         <div class=" col-12">
             <ul class=" list-group" id="list">
-
                 <li class=" my-3 py-3 shadow list-group-item " *ngFor="let task of tasks" >
                     <div class="row">
                         <div class="col-1">
@@ -90,15 +25,18 @@
                             <label  class="h4" *ngIf="!task.helpField">
                                 {{task.Title}}
                             </label>
-                            <input  class="h4" *ngIf="task.helpField" type="text" [(ngModel)]="task.Title"
+                            <input  class="form-control shadow h3" *ngIf="task.helpField" type="text" [(ngModel)]="task.Title"
                                 (keyup.enter)="editTask(task)">
 
                         </div>
                         <div class="col-4">
                             <button class=" btn btn-dark" (click)="remove(task)">Delete</button>
                             <div class="space"></div>
-                            <button class=" btn btn-dark" (click)="dblClickForEdit(task)">Edit</button>
+                            <button class=" btn btn-dark" (click)="saveEditToggle(task)">{{(task.helpField ? 'Save':'Edit')}}</button>
                         </div>
+                    </div>
+                    <div class="row descriptionField" *ngIf="task.helpField" >
+                        <textarea [(ngModel)]="task.Description" class="form-control shadow"></textarea>
                     </div>
                 </li> 
             </ul>
