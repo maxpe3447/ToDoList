@@ -47,11 +47,11 @@ export class ListComponent implements OnInit{
     this.title ='';
   }
   startEdit(task:Task){
-    task.helpField = true;
+    task.isEditMode = true;
   }
   editTask(task:Task){
     this.taskService.Edit(task).subscribe();
-    task.helpField = false;
+    task.isEditMode = false;
   }
   remove(task: Task){
     this.taskService.Remove(task).subscribe();
@@ -59,7 +59,7 @@ export class ListComponent implements OnInit{
     this.tasks.splice(index, 1);
   }
   saveEditToggle(task:Task){
-    if(task.helpField){
+    if(task.isEditMode){
       this.editTask(task);
       return;
     }

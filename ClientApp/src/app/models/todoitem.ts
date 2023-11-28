@@ -3,7 +3,7 @@ export class Task{
     Title: string="";
     Description: string="";
     IsDone: boolean = false;
-    helpField: boolean = false;
+    isEditMode: boolean = false;
     constructor(id: Number, title:string, description:string, isDone:boolean){
         this.Id = id;
         this.Description = description;
