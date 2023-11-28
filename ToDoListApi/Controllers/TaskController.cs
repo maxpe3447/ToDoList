@@ -33,6 +33,12 @@ public class TaskController:ControllerBase
     [HttpPost("edit")]
     public async Task<ActionResult> Edit(TaskModel taskModel)
     {
+        int userId = int.Parse(User.Claims.FirstOrDefault(x => x.Type == "UserId")?.Value ?? "0");
+        if (userId == 0)
+        {
+            return BadRequest("Invalid Token");
+        }
+        taskModel.UserId = userId;
         await _taskService.Edit(taskModel);
         return Ok();
     }

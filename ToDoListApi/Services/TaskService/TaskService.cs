@@ -33,7 +33,8 @@ namespace ToDoListApi.Services.TaskService
 
         public async Task Edit(TaskModel taskModel)
         {
-            _appDbContext.Entry(taskModel.ToDataTask()).State = EntityState.Modified;
+            var dt = taskModel.ToDataTask();
+            _appDbContext.Entry(dt).State = EntityState.Modified;
             await _appDbContext.SaveChangesAsync();
         }
 

@@ -13,38 +13,43 @@ export class TaskService {
 
   constructor(private http:HttpClient) { }
 
-  GetTasks():Observable<Task[]>{
-
+  private GetHeaders(){
     const userString = localStorage.getItem('user');
     if(!userString){
       //userString = "";
       throw Error("invalid user token");
     }
     const user: User = JSON.parse(userString);
-    const headerDict = {
+    return {
         'Authorization': 'Bearer '+ user.token
       }
+  }
+
+  GetTasks():Observable<Task[]>{
+
+    
      return this.http.get('https://localhost:7125/api/'+'task/get_all',{
-        headers: headerDict
+        headers: this.GetHeaders()
     }).pipe(
       map( (response:any) => response.map((t:any) => 
                     new Task(t.id, t.title, t.description, t.isDone ))
     ));    
   }
-  createNew(task:Task){
-    const userString = localStorage.getItem('user');
-    if(!userString){
-      //userString = "";
-      throw Error("invalid user token");
-    }
-    const user: User = JSON.parse(userString);
-    const headerDict = {
-        'Authorization': 'Bearer '+ user.token
-      }
+  CreateNew(task:Task){
      return this.http.post('https://localhost:7125/api/'+'task/add',task,{
-        headers: headerDict
+        headers: this.GetHeaders()
     }).pipe(
       map( (t:any) => new Task(t.id, t.title, t.description, t.isDone )
     ));    
+  }
+  Edit(task:Task){
+     this.http.post('https://localhost:7125/api/'+'task/edit',task,{
+        headers: this.GetHeaders()
+    }).subscribe();
+  }
+  Remove(task: Task){
+     this.http.post('https://localhost:7125/api/'+'task/delete',task,{
+        headers: this.GetHeaders()
+    }).subscribe();
   }
 }

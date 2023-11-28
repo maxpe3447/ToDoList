@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgClass } from '@angular/common';
 import { TaskService } from '../../services/taskservice';
-import { TmplAstIfBlockBranch } from '@angular/compiler';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../../models/user';
 import { FormsModule } from '@angular/forms';
 import { Task } from '../../models/todoitem';
 
@@ -32,12 +30,13 @@ export class ListComponent implements OnInit{
     });    
   }
 
-  toggle(task:any){
-    console.log(task);
+  togglecheck(task:Task){
+    task.IsDone = !task.IsDone;
+    this.editTask(task);
   }
 
   addTask(){
-    this.taskService.createNew(new Task(0, this.title, "", false)).subscribe({
+    this.taskService.CreateNew(new Task(0, this.title, "", false)).subscribe({
       next: response => this.tasks.push(response),
       error: error => console.log(error),
       complete: ()=> console.log('complete!')
@@ -45,5 +44,18 @@ export class ListComponent implements OnInit{
     
     this.title ='';
   }
-
+  dblClickForEdit(task:Task){
+    console.log(task);
+    task.helpField = true;
+  }
+  editTask(task:Task){
+    // console.log(task.Title);
+    this.taskService.Edit(task);
+    task.helpField = false;
+  }
+  remove(task: Task){
+    this.taskService.Remove(task);
+    const index = this.tasks.indexOf(task);
+    this.tasks.splice(index, 1);
+  }
 }

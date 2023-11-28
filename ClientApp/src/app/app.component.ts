@@ -24,7 +24,6 @@ export class AppComponent {
   }
   ngOnInit(): void {
     this.setCurrentUser();
-    //this.isSignIn = localStorage.getItem("")
   }
 
 

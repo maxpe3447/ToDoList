@@ -12,7 +12,8 @@ public static class TaskModelExtensions
             Id = task.Id,
             Title = task.Title,
             Description = task.Description ?? string.Empty,
-            IsDone = task.IsDone
+            IsDone = task.IsDone,
+            UserId = task.UserId,
         };
     }
 }
