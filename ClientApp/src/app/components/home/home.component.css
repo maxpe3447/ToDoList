@@ -1,0 +1,7 @@
+.back{
+ background-color: aliceblue;   
+ box-shadow: 0 0 10px 10px #0d47a1 inset;
+ border-radius: 20px;
+ padding: 10px;
+ border-width: none;
+}
