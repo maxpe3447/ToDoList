@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Runtime.CompilerServices;
 using ToDoListApi.Data.Entities;
 using ToDoListApi.Models;
+using ToDoListApi.Services.LoginService;
 using ToDoListApi.Services.RegistrationService;
 
 namespace ToDoListApi.Controllers;
@@ -12,10 +13,13 @@ namespace ToDoListApi.Controllers;
 public class AccountController : ControllerBase
 {
     private readonly IRegistrationService _registrationService;
+    private readonly ILoginService _loginService;
 
-    public AccountController(IRegistrationService registrationService)
+    public AccountController(IRegistrationService registrationService, 
+                             ILoginService loginService)
     {
         _registrationService = registrationService;
+        _loginService = loginService;
     }
 
     [HttpPost("register")]
@@ -27,5 +31,22 @@ public class AccountController : ControllerBase
         }
 
         return await _registrationService.Registration(user);
+    }
+
+    [HttpPost("login")]
+    public async Task<ActionResult<UserModel>>Login(LoginModel login)
+    {
+        var user = await _loginService.IsExists(login);
+        if(user == null)
+        {
+            return Unauthorized("Invalid User");
+        }
+
+        var result = _loginService.Login(user, login);
+        if(result == default)
+        {
+            return Unauthorized("Invalid password");
+        }
+        return result;
     }
 }
