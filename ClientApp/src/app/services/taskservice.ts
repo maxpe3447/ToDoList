@@ -32,14 +32,14 @@ export class TaskService {
         headers: this.GetHeaders()
     }).pipe(
       map( (response:any) => response.map((t:any) => 
-                    new Task(t.id, t.title, t.description, t.isDone ))
+                    new Task(t.id, t.title, t.description, t.isDone, t.createdDate))
     ));    
   }
   CreateNew(task:Task){
      return this.http.post('https://localhost:7125/api/'+'task/add',task,{
         headers: this.GetHeaders()
     }).pipe(
-      map( (t:any) => new Task(t.id, t.title, t.description, t.isDone )
+      map( (t:any) => new Task(t.id, t.title, t.description, t.isDone, t.createdDate)
     ));    
   }
   Edit(task:Task):Observable<any>{

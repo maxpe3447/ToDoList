@@ -15,10 +15,25 @@ import { AccountService } from '../../services/accountService';
 })
 export class ListComponent implements OnInit{
   title:string ="";
-  tasks: Task[] = [];
+  private tasks: Task[] = [];
   username:String = ""
+  isNewStart:boolean = true;
   constructor(private taskService: TaskService, private accountService:AccountService){}
 
+  getTasks(){
+    if(this.isNewStart){
+      return this.tasks.sort((a,b)=>-this.compareDates(a.DateTime, b.DateTime))
+    }
+    return this.tasks.sort((a,b)=>this.compareDates(a.DateTime, b.DateTime))
+  }
+
+  private compareDates = (a: Date, b: Date): number => {
+    if (a < b) return -1;
+    if (a > b) return 1;
+  
+    return 0;
+  };
+  
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe({
       next: val => this.username = val?.username ?? ""
@@ -36,9 +51,11 @@ export class ListComponent implements OnInit{
     task.IsDone = !task.IsDone;
     this.editTask(task);
   }
-
+  toggleSortCheck(){
+    this.isNewStart = !this.isNewStart;
+  }
   addTask(){
-    this.taskService.CreateNew(new Task(0, this.title, "", false)).subscribe({
+    this.taskService.CreateNew(new Task(0, this.title, "", false, new Date())).subscribe({
       next: response => this.tasks.push(response),
       error: error => console.log(error),
       complete: ()=> console.log('Request {CreateNew} has compleated!')

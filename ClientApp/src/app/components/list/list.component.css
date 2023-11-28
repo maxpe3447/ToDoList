@@ -1,8 +1,11 @@
-.space{
+.spaceHorisontal{
     display: inline-block;
     width: 10px;
 }
-
+.spaceVertical{
+    display: inline-block;
+    height: 10px;
+}
 .descriptionField{
     margin-top: 10px;
 }

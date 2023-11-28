@@ -9,13 +9,25 @@
             <div class="col-2">
                 <button class=" mt-2 btn btn-dark" (click)="addTask()"> Add </button>
             </div>
+            <div class="spaceVertical"></div>
+            <div>
+                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" [checked]="isNewStart"
+                    (change)="toggleSortCheck()">
+                    <label class="btn btn-outline-dark" for="btnradio1">New</label>
+                    
+                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" [checked]="!isNewStart"
+                    (change)="toggleSortCheck()">
+                    <label class="btn btn-outline-dark" for="btnradio2">Old</label>
+                </div>
+            </div>
         </div>
     </div>
     <hr>
     <div class="row rounded bg-white">
         <div class=" col-12">
             <ul class=" list-group" id="list">
-                <li class=" my-3 py-3 shadow list-group-item " *ngFor="let task of tasks"  >
+                <li class=" my-3 py-3 shadow list-group-item " *ngFor="let task of getTasks()"  >
                     <div class="row">
                         <div class="col-1">
                             <input class="" type="checkbox" [checked]="task.IsDone"
@@ -32,7 +44,7 @@
                         </div>
                         <div class="col-4">
                             <button class=" btn btn-dark" (click)="remove(task)">Delete</button>
-                            <div class="space"></div>
+                            <div class="spaceHorisontal"></div>
                             <button class=" btn btn-dark" (click)="saveEditToggle(task)">{{(task.isEditMode ? 'Save':'Edit')}}</button>
                         </div>
                     </div>
