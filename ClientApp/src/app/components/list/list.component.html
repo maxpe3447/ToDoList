@@ -15,27 +15,29 @@
     <div class="row rounded bg-white">
         <div class=" col-12">
             <ul class=" list-group" id="list">
-                <li class=" my-3 py-3 shadow list-group-item " *ngFor="let task of tasks" >
+                <li class=" my-3 py-3 shadow list-group-item " *ngFor="let task of tasks"  >
                     <div class="row">
                         <div class="col-1">
                             <input class="" type="checkbox" [checked]="task.IsDone"
                             (change)="togglecheck(task)">
                         </div>
                         <div class="col-6">
-                            <label  class="h4" *ngIf="!task.helpField">
+                            <label *ngIf="task.isEditMode">Title:</label>
+                            <label  class="h4 " [ngClass]="{'text-decoration-line-through': task.IsDone}" *ngIf="!task.isEditMode">
                                 {{task.Title}}
                             </label>
-                            <input  class="form-control shadow h3" *ngIf="task.helpField" type="text" [(ngModel)]="task.Title"
+                            <input  class="form-control shadow h3" *ngIf="task.isEditMode" type="text" [(ngModel)]="task.Title"
                                 (keyup.enter)="editTask(task)">
 
                         </div>
                         <div class="col-4">
                             <button class=" btn btn-dark" (click)="remove(task)">Delete</button>
                             <div class="space"></div>
-                            <button class=" btn btn-dark" (click)="saveEditToggle(task)">{{(task.helpField ? 'Save':'Edit')}}</button>
+                            <button class=" btn btn-dark" (click)="saveEditToggle(task)">{{(task.isEditMode ? 'Save':'Edit')}}</button>
                         </div>
                     </div>
-                    <div class="row descriptionField" *ngIf="task.helpField" >
+                    <div class="row descriptionField" *ngIf="task.isEditMode" >
+                        <label >Description:</label>
                         <textarea [(ngModel)]="task.Description" class="form-control shadow"></textarea>
                     </div>
                 </li> 
