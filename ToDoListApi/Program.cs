@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ToDoListApi.Services.RegistrationService;
 using ToDoListApi.Services.TaskService;
+using ToDoListApi.Controllers;
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions { WebRootPath = "wwwroot/browser" });
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
@@ -46,5 +47,5 @@ app.UseStaticFiles();
 app.UseDefaultFiles();
 
 app.MapControllers();
-
+app.MapFallbackToController(nameof(FallBackController.Index), nameof(FallBackController).Replace("Controller",""));
 app.Run();
