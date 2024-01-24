@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { User } from '../models/user';
 import { Task } from '../models/todoitem';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
 
-  baseUrl = 'https://localhost:7125/api/';
+  baseUrl = environment.apiUrl;
 
   constructor(private http:HttpClient) { }
 
@@ -28,7 +29,7 @@ export class TaskService {
   GetTasks():Observable<Task[]>{
 
     
-     return this.http.get('https://localhost:7125/api/'+'task/get_all',{
+     return this.http.get(this.baseUrl+'task/get_all',{
         headers: this.GetHeaders()
     }).pipe(
       map( (response:any) => response.map((t:any) => 
@@ -36,19 +37,19 @@ export class TaskService {
     ));    
   }
   CreateNew(task:Task){
-     return this.http.post('https://localhost:7125/api/'+'task/add',task,{
+     return this.http.post(this.baseUrl+'task/add',task,{
         headers: this.GetHeaders()
     }).pipe(
       map( (t:any) => new Task(t.id, t.title, t.description, t.isDone, t.createdDate)
     ));    
   }
   Edit(task:Task):Observable<any>{
-     return this.http.post('https://localhost:7125/api/'+'task/edit',task,{
+     return this.http.post(this.baseUrl+'task/edit',task,{
         headers: this.GetHeaders()
     });
   }
   Remove(task: Task):Observable<any>{
-     return this.http.post('https://localhost:7125/api/'+'task/delete',task,{
+     return this.http.post(this.baseUrl+'task/delete',task,{
         headers: this.GetHeaders()
     });
   }

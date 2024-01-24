@@ -7,7 +7,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using ToDoListApi.Services.RegistrationService;
 using ToDoListApi.Services.TaskService;
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions { WebRootPath = "wwwroot/browser" });
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
@@ -41,6 +41,9 @@ app.UseCors(builder => builder.AllowAnyHeader()
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseStaticFiles();
+app.UseDefaultFiles();
 
 app.MapControllers();
 
