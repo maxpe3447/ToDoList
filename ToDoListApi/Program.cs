@@ -48,4 +48,8 @@ app.UseDefaultFiles();
 
 app.MapControllers();
 app.MapFallbackToController(nameof(FallBackController.Index), nameof(FallBackController).Replace("Controller",""));
+
+var scoped = app.Services.CreateScope();
+scoped.ServiceProvider.GetService<AppDbContext>().Database.Migrate();
+
 app.Run();
