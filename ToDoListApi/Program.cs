@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions { WebRootPa
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 builder.Services.AddControllers();
 builder.Services.AddCors();

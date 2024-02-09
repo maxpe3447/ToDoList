@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
+# EXPOSE 443
 
 COPY *.csproj .
 RUN dotnet restore
@@ -13,3 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS final-env
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "ToDoListApi.dll"]
+
+#docker build -t todo .
+# docker run -p 8081:80 -e ASPNETCORE_URLS=http://+:80 todo
